@@ -57,24 +57,49 @@ check_dependencies() {
     print_step "Dependencies check completed."
 }
 
+# Function to clean and convert project name
+clean_project_name() {
+    local name="$1"
+    
+    # Remove special characters except letters, numbers, spaces, and hyphens
+    name=$(echo "$name" | sed 's/[^a-zA-Z0-9 -]//g')
+    
+    # Trim leading/trailing spaces
+    name=$(echo "$name" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+    
+    # Convert to PascalCase (capitalize first letter of each word)
+    name=$(echo "$name" | sed -E 's/\b([a-z])/\u\1/g')
+    
+    # Remove spaces
+    name=$(echo "$name" | sed 's/[[:space:]]//g')
+    
+    # If empty after cleaning, use default
+    if [[ -z "$name" ]]; then
+        name="LeanProject"
+    fi
+    
+    echo "$name"
+}
+
 get_project_name() {
     # Check if we're running in a terminal
     if [[ -t 0 ]]; then
         # Interactive mode - read from terminal
         while true; do
             echo -e "\n${BLUE}Enter your project name (e.g., DedekindDomain, GroupTheory):${NC}"
-            read -r project_name
+            read -r raw_project_name
             
             # Validate project name
-            if [[ -z "$project_name" ]]; then
+            if [[ -z "$raw_project_name" ]]; then
                 print_error "Project name cannot be empty."
                 continue
             fi
             
-            # Convert to PascalCase if needed
-            project_name=$(echo "$project_name" | sed -E 's/(^|_)([a-z])/\U\2/g')
+            # Clean and convert the project name
+            project_name=$(clean_project_name "$raw_project_name")
             
-            echo -e "${YELLOW}Project name will be: $project_name${NC}"
+            echo -e "${YELLOW}Raw input: $raw_project_name${NC}"
+            echo -e "${YELLOW}Cleaned name: $project_name${NC}"
             echo -e "Is this correct? (y/n)"
             read -r confirm
             
@@ -85,10 +110,11 @@ get_project_name() {
     else
         # Non-interactive mode - use command line arguments or defaults
         if [[ -n "$1" ]]; then
-            project_name="$1"
-            # Convert to PascalCase if needed
-            project_name=$(echo "$project_name" | sed -E 's/(^|_)([a-z])/\U\2/g')
-            echo -e "${YELLOW}Using project name: $project_name${NC}"
+            raw_project_name="$1"
+            # Clean and convert the project name
+            project_name=$(clean_project_name "$raw_project_name")
+            echo -e "${YELLOW}Raw input: $raw_project_name${NC}"
+            echo -e "${YELLOW}Cleaned name: $project_name${NC}"
         else
             # Try to get project name from URL or use default
             project_name="LeanProject"
@@ -193,6 +219,7 @@ rename_project() {
     # Update lakefile.toml
     if [[ -f "lakefile.toml" ]]; then
         sed -i '' "s/name = \"MyProject\"/name = \"$project_name\"/g" lakefile.toml
+        sed -i '' "s/defaultTargets = \\[\"MyProject\"\\]/defaultTargets = [\"$project_name\"]/g" lakefile.toml
     fi
     
     # Update imports in Lean files
