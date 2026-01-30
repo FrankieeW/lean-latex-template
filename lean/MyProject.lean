@@ -37,7 +37,7 @@ import MyProject.Basic
 -/
 
 -- Example: Check that your definitions are well-formed
-#check MyProject.Defs.MyDefinition
+-- #check MyProject.Defs.GroupAction  -- Uncomment when you have defined GroupAction
 
 -- Run linter to check for common issues
 #lint
