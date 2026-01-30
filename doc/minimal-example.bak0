@@ -1,0 +1,49 @@
+% Minimal LaTeX example for quick testing
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+
+\begin{document}
+
+\title{Minimal Example}
+\author{Your Name}
+\date{\today}
+\maketitle
+
+\section{Introduction}
+
+This is a minimal LaTeX example for testing your setup.
+
+\section{Mathematics Example}
+
+\begin{definition}[Group]
+A \emph{group} is a set $G$ with a binary operation $\cdot: G \times G \to G$ satisfying:
+\begin{enumerate}
+    \item Associativity: $(a \cdot b) \cdot c = a \cdot (b \cdot c)$ for all $a, b, c \in G$
+    \item Identity: There exists $e \in G$ such that $e \cdot a = a \cdot e = a$ for all $a \in G$
+    \item Inverses: For each $a \in G$, there exists $a^{-1} \in G$ such that $a \cdot a^{-1} = a^{-1} \cdot a = e$
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Lagrange's Theorem]
+If $G$ is a finite group and $H$ is a subgroup of $G$, then $|H|$ divides $|G|$.
+\end{theorem}
+
+\begin{proof}
+The proof uses cosets and the fact that they partition $G$ into equal-sized subsets.
+\end{proof}
+
+\section{Conclusion}
+
+This template shows basic LaTeX features:
+\begin{itemize}
+    \item Mathematical notation with \texttt{amsmath}
+    \item Theorem environments with \texttt{amsthm}
+    \item Basic document structure
+    \item Lists and formatting
+\end{itemize}
+
+\end{document}

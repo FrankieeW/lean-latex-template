@@ -1,0 +1,39 @@
+# Lake configuration file for Lean 4 project
+# Replace "MyProject" with your actual project name
+
+name = "MyProject"
+defaultTargets = ["MyProject"]
+
+[leanOptions]
+# Enable Unicode for pretty printing
+pp.unicode.fun = true
+# Disable autoImplicit for stricter type checking
+autoImplicit = false
+relaxedAutoImplicit = false
+# Enable style linters
+linter.style.longLine = true
+
+# Dependencies
+[[require]]
+name = "mathlib"
+# Use the latest stable version of mathlib
+# Check https://github.com/leanprover-community/mathlib4/releases for latest version
+rev = "v4.27.0"
+git = "https://github.com/leanprover-community/mathlib4.git"
+
+# Your library
+[[lean_lib]]
+name = "MyProject"
+srcDir = "lean"
+
+# Optional: Add more dependencies if needed
+# [[require]]
+# name = "other-library"
+# git = "https://github.com/user/repo.git"
+# rev = "main"
+
+# Optional: Add executable if you have a main file
+# [[lean_exe]]
+# name = "myproject-exe"
+# root = "lean/Main.lean"
+# supportInterpreter = true

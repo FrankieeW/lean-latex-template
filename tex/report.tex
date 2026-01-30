@@ -1,0 +1,246 @@
+% Copyright (c) [Year] [Your Name]. All rights reserved.
+% Repository: [Your GitHub Repository URL]
+
+%----------------------------------------------------------------------------------------
+% Coursework/Project Requirements
+% This template is designed for formal mathematics projects using Lean 4.
+% 
+% For a typical project, you should include:
+% ▶ Some Lean code (150–200 lines of code including comments)
+% ▶ A PDF explaining what is going on (5+ pages)
+% 
+% This template provides:
+% 1. Proper LaTeX setup for mathematics
+% 2. Code highlighting for Lean 4
+% 3. GitHub integration for code references
+% 4. Professional formatting
+%----------------------------------------------------------------------------------------
+% PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+  12pt, % Default font size
+]{assignment}
+
+% Set table of contents depth
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+
+\usepackage{amsthm} % For proof environment
+\newtheorem{lemma}{Lemma} % define lemma environment
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+
+\usepackage{fontspec}
+\usepackage{float}
+\setmonofont{FreeMono}
+\usepackage{hyperref}
+\usepackage{minted}
+\newmintinline[lean]{lean4}{bgcolor=white}
+\newminted[leancode]{lean4}{fontsize=\footnotesize,breaklines,breakanywhere,tabsize=4,showspaces=false}
+\newcommand{\leancodeurl}{}
+\newcommand{\setleancodeurl}[1]{\renewcommand{\leancodeurl}{#1}}
+\renewcommand{\theFancyVerbLine}{\arabic{FancyVerbLine}}
+\renewcommand{\FancyVerbFormatLine}[1]{\href{\leancodeurl\#L\arabic{FancyVerbLine}}{#1}}
+
+% Command to import code directly from .lean files
+% Usage: \leancodefile[minted options]{local/path/to/file.lean}{github_url}
+\newcommand{\leancodefile}[3][]{%
+  \setleancodeurl{#3}%
+  \inputminted[fontsize=\footnotesize,breaklines,breakanywhere,tabsize=4,showspaces=false,linenos=true,#1]{lean4}{#2}%
+}
+
+\usemintedstyle{tango}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\newcommand\nb{\addtocounter{equation}{1}\tag{\theequation}}
+
+%-------------------------------------------------------------------------------
+% ASSIGNMENT INFORMATION
+%-------------------------------------------------------------------------------
+
+% Fix for fancyhdr warning
+\setlength{\headheight}{29.34845pt}
+\addtolength{\topmargin}{-17.34845pt}
+
+\title{[Your Project Title]} % Assignment title
+\author{[Your Name]} % Student name
+\studentid{[Your Student ID]} % Student id
+\email{[Your Email]} % Student email
+\github{[Your GitHub Repository URL]} % GitHub URL
+\date{\today} % Due date
+\institute{[Your Department/University]} % Institute or school name
+
+%-------------------------------------------------------------------------------
+% DOCUMENT
+%-------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title
+
+%-------------------------------------------------------------------------------
+% ABSTRACT
+%-------------------------------------------------------------------------------
+
+\begin{abstract}
+	This report documents the formalization of [brief description of your project] using the Lean 4 theorem prover. We present the mathematical definitions, state and prove key theorems, and provide examples to illustrate the concepts. All code is available at \url{[Your GitHub Repository URL]}.
+\end{abstract}
+
+%-------------------------------------------------------------------------------
+% TABLE OF CONTENTS
+%-------------------------------------------------------------------------------
+
+\tableofcontents % Print the table of contents
+\newpage
+
+%-------------------------------------------------------------------------------
+% INTRODUCTION
+%-------------------------------------------------------------------------------
+
+\section{Introduction}
+
+\subsection{Background}
+[Provide background information about your project. What mathematical concepts are you formalizing? Why is this interesting or important?]
+
+\subsection{Goals}
+The main goals of this project are:
+\begin{itemize}
+	\item To formalize the definition of [your concept] in Lean 4
+	\item To prove key properties and theorems about [your concept]
+	\item To provide concrete examples and applications
+	\item To demonstrate the use of Lean for formal mathematics
+\end{itemize}
+
+\subsection{Structure}
+This report is organized as follows:
+\begin{itemize}
+	\item Section 2 presents the mathematical background
+	\item Section 3 describes the Lean formalization
+	\item Section 4 presents the main theorems and proofs
+	\item Section 5 provides examples and applications
+	\item Section 6 concludes with reflections and future work
+\end{itemize}
+
+%-------------------------------------------------------------------------------
+% MATHEMATICAL BACKGROUND
+%-------------------------------------------------------------------------------
+
+\section{Mathematical Background}
+
+\subsection{Basic Definitions}
+[Introduce the mathematical definitions you will formalize. Use proper mathematical notation.]
+
+\begin{definition}[Your Definition]
+	Let $G$ be a group and $X$ be a set. A \emph{group action} of $G$ on $X$ is a function $\cdot: G \times X \to X$ satisfying:
+	\begin{enumerate}
+		\item $1 \cdot x = x$ for all $x \in X$
+		\item $(g h) \cdot x = g \cdot (h \cdot x)$ for all $g, h \in G$ and $x \in X$
+	\end{enumerate}
+\end{definition}
+
+\subsection{Key Properties}
+[Describe important properties and theorems related to your definitions.]
+
+%-------------------------------------------------------------------------------
+% LEAN FORMALIZATION
+%-------------------------------------------------------------------------------
+
+\section{Lean Formalization}
+
+\subsection{Project Structure}
+The Lean project has the following structure:
+\begin{verbatim}
+lean/
+├── MyProject.lean          # Main file
+├── MyProject/
+│   ├── Defs.lean          # Definitions
+│   ├── Basic.lean         # Basic properties
+│   ├── Examples.lean      # Examples
+│   └── Theorems.lean      # Main theorems
+\end{verbatim}
+
+\subsection{Definitions in Lean}
+The core definitions are formalized in \texttt{Defs.lean}:
+
+% Example: Import code from your Lean file
+% \leancodefile[firstline=1,lastline=20]{../lean/MyProject/Defs.lean}{https://github.com/.../Defs.lean}
+
+[Describe your Lean definitions here. Explain how they correspond to the mathematical definitions.]
+
+\subsection{Basic Properties}
+Basic properties are proved in \texttt{Basic.lean}:
+
+% \leancodefile[firstline=1,lastline=15]{../lean/MyProject/Basic.lean}{https://github.com/.../Basic.lean}
+
+[Explain the basic lemmas and their proofs.]
+
+%-------------------------------------------------------------------------------
+% MAIN THEOREMS AND PROOFS
+%-------------------------------------------------------------------------------
+
+\section{Main Theorems and Proofs}
+
+\subsection{Theorem 1: [Theorem Name]}
+\begin{theorem}[Your Theorem]
+	[State your theorem in mathematical notation.]
+\end{theorem}
+
+\begin{proof}[Lean Proof]
+	% \leancodefile[firstline=1,lastline=30]{../lean/MyProject/Theorems.lean}{https://github.com/.../Theorems.lean}
+
+	[Explain the Lean proof strategy and key steps.]
+\end{proof}
+
+\subsection{Theorem 2: [Another Theorem]}
+[Add more theorems as needed.]
+
+%-------------------------------------------------------------------------------
+% EXAMPLES AND APPLICATIONS
+%-------------------------------------------------------------------------------
+
+\section{Examples and Applications}
+
+\subsection{Example 1: [Example Name]}
+[Provide a concrete example and show how it works in Lean.]
+
+% \leancodefile[firstline=1,lastline=20]{../lean/MyProject/Examples.lean}{https://github.com/.../Examples.lean}
+
+\subsection{Application: [Application Name]}
+[Show an application of your formalization.]
+
+%-------------------------------------------------------------------------------
+% CONCLUSION
+%-------------------------------------------------------------------------------
+
+\section{Conclusion}
+
+\subsection{Summary}
+[Summarize what you have accomplished in this project.]
+
+\subsection{Challenges and Learnings}
+[Discuss the challenges you faced and what you learned from this project.]
+
+\subsection{Future Work}
+[Suggest possible extensions or improvements to your formalization.]
+
+%-------------------------------------------------------------------------------
+% REFERENCES
+%-------------------------------------------------------------------------------
+
+\begin{thebibliography}{9}
+	\bibitem{lean} The Lean Theorem Prover. \url{https://leanprover.github.io/}
+	\bibitem{mathlib} The mathlib Library. \url{https://github.com/leanprover-community/mathlib4}
+	\bibitem{reference1} [Add your references here]
+\end{thebibliography}
+
+%-------------------------------------------------------------------------------
+% APPENDIX (OPTIONAL)
+%-------------------------------------------------------------------------------
+
+\appendix
+\section{Appendix: Complete Code Listing}
+ [Optional: Include complete code listings if space permits.]
+
+\end{document}
