@@ -230,6 +230,10 @@ rename_project() {
         sed -i '' "s/#check MyProject$/#check $project_name/g" "$file"
         sed -i '' "s/MyProject\.Defs\./$project_name\.Defs\./g" "$file"
         sed -i '' "s/MyProject\.Basic\./$project_name\.Basic\./g" "$file"
+        sed -i '' "s/MyProject\.Examples\./$project_name\.Examples\./g" "$file"
+        sed -i '' "s/MyProject\.Theorems\./$project_name\.Theorems\./g" "$file"
+        # General replacement for any MyProject. reference
+        sed -i '' "s/MyProject\./$project_name\./g" "$file"
     done
     
     # Update README.md
