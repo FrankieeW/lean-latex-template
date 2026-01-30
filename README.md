@@ -10,24 +10,27 @@ A template for formal mathematics projects using Lean 4 with LaTeX report integr
 - **Project Structure**: Organized directory layout for scalability
 - **Documentation**: Comprehensive guides and checklists
 
-## One-Click Initialization
+## 🚀 One-Click Installation
 
-Use the included script to quickly create a new project:
+Create a new Lean project with a single command:
 
 ```bash
-# Make the script executable
-chmod +x init-template.sh
+# Method 1: Direct download and run (recommended)
+curl -sSL https://raw.githubusercontent.com/FrankieeW/lean-latex-template/main/scripts/init-template.sh | bash
 
-# Run the script
-./init-template.sh
+# Method 2: Clone and run
+git clone https://github.com/FrankieeW/lean-latex-template
+cd lean-latex-template
+chmod +x scripts/init-template.sh
+./scripts/init-template.sh
 ```
 
-The script will:
-1. Ask for your project name (e.g., "DedekindDomain")
-2. Let you choose where to create the project
-3. Clone the template and rename everything
-4. Initialize Git repository
-5. Set up project dependencies
+The script will guide you through:
+1. Project name (e.g., "DedekindDomain", "GroupTheory")
+2. Target directory selection
+3. Automatic template setup and renaming
+4. Git repository initialization
+5. Project dependency setup
 
 ## Quick Start
 
@@ -101,7 +104,8 @@ open report.pdf
 ├── lakefile.toml         # Lean project configuration
 ├── lean-toolchain        # Lean version specification
 ├── .gitignore           # Git ignore rules
-├── init-template.sh     # One-click initialization script
+├── scripts/             # Utility scripts
+│   └── init-template.sh # One-click initialization
 └── README.md            # This file
 ```
 
@@ -243,6 +247,44 @@ The report template includes commands to embed Lean code with GitHub links:
 - Write descriptive commit messages
 - Reference issues when applicable
 - Keep commits focused and atomic
+
+## 📜 Scripts
+
+### `scripts/init-template.sh`
+
+The main initialization script that creates new projects from this template.
+
+**Usage:**
+```bash
+# Direct download and run
+curl -sSL https://raw.githubusercontent.com/FrankieeW/lean-latex-template/main/scripts/init-template.sh | bash
+
+# Or run locally
+./scripts/init-template.sh
+```
+
+**Features:**
+- Interactive project name input (auto-converts to PascalCase)
+- Multiple directory options (current, custom, or ~/Projects)
+- Automatic file renaming and import updates
+- Git repository initialization
+- Project dependency setup
+- Colorful output and error handling
+
+**Example workflow:**
+```bash
+$ ./scripts/init-template.sh
+# Follow the prompts to create "DedekindDomain" project
+# Script handles everything automatically
+```
+
+### Adding New Scripts
+
+Place utility scripts in the `scripts/` directory:
+- Build automation scripts
+- Testing scripts
+- Deployment scripts
+- Documentation generators
 
 ## Troubleshooting
 
