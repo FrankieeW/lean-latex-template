@@ -14,23 +14,60 @@ A template for formal mathematics projects using Lean 4 with LaTeX report integr
 
 Create a new Lean project with a single command:
 
+### Method 1: Direct download and run (recommended for quick start)
+
 ```bash
-# Method 1: Direct download and run (recommended)
+# Basic usage - script will use default name "LeanProject"
 curl -sSL https://raw.githubusercontent.com/FrankieeW/lean-latex-template/main/scripts/init-template.sh | bash
 
-# Method 2: Clone and run
-git clone https://github.com/FrankieeW/lean-latex-template
-cd lean-latex-template
-chmod +x scripts/init-template.sh
-./scripts/init-template.sh
+# Specify project name directly
+curl -sSL https://raw.githubusercontent.com/FrankieeW/lean-latex-template/main/scripts/init-template.sh | bash -s -- DedekindDomain
+
+# Specify project name with spaces (will be converted to PascalCase)
+curl -sSL https://raw.githubusercontent.com/FrankieeW/lean-latex-template/main/scripts/init-template.sh | bash -s -- "dedekind domain"
 ```
 
-The script will guide you through:
-1. Project name (e.g., "DedekindDomain", "GroupTheory")
-2. Target directory selection
-3. Automatic template setup and renaming
-4. Git repository initialization
-5. Project dependency setup
+### Method 2: Clone and run (recommended for customization)
+
+```bash
+# Clone the template
+git clone https://github.com/FrankieeW/lean-latex-template
+cd lean-latex-template
+
+# Make script executable and run
+chmod +x scripts/init-template.sh
+
+# Interactive mode (with prompts)
+./scripts/init-template.sh
+
+# Non-interactive mode with project name
+./scripts/init-template.sh DedekindDomain
+```
+
+### What the script does:
+
+1. **Checks dependencies**: Git, Lean, Lake (optional)
+2. **Gets project name**: Interactive prompts or command line argument
+3. **Selects directory**: Current dir or specified location
+4. **Clones template**: Downloads and sets up the template
+5. **Renames everything**: Updates all files with your project name
+6. **Initializes Git**: Creates fresh Git repository
+7. **Sets up project**: Runs `lake update` and `lake build`
+
+### Examples:
+
+```bash
+# Create a Dedekind Domain project
+curl -sSL https://raw.githubusercontent.com/FrankieeW/lean-latex-template/main/scripts/init-template.sh | bash -s -- DedekindDomain
+
+# Create a Group Theory project
+curl -sSL https://raw.githubusercontent.com/FrankieeW/lean-latex-template/main/scripts/init-template.sh | bash -s -- "group theory"
+
+# Create in specific directory
+mkdir ~/my-projects
+cd ~/my-projects
+curl -sSL https://raw.githubusercontent.com/FrankieeW/lean-latex-template/main/scripts/init-template.sh | bash -s -- AlgebraicTopology
+```
 
 ## Quick Start
 
