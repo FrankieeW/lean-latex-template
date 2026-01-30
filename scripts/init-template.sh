@@ -58,67 +58,102 @@ check_dependencies() {
 }
 
 get_project_name() {
-    while true; do
-        echo -e "\n${BLUE}Enter your project name (e.g., DedekindDomain, GroupTheory):${NC}"
-        read -r project_name
-        
-        # Validate project name
-        if [[ -z "$project_name" ]]; then
-            print_error "Project name cannot be empty."
-            continue
+    # Check if we're running in a terminal
+    if [[ -t 0 ]]; then
+        # Interactive mode - read from terminal
+        while true; do
+            echo -e "\n${BLUE}Enter your project name (e.g., DedekindDomain, GroupTheory):${NC}"
+            read -r project_name
+            
+            # Validate project name
+            if [[ -z "$project_name" ]]; then
+                print_error "Project name cannot be empty."
+                continue
+            fi
+            
+            # Convert to PascalCase if needed
+            project_name=$(echo "$project_name" | sed -E 's/(^|_)([a-z])/\U\2/g')
+            
+            echo -e "${YELLOW}Project name will be: $project_name${NC}"
+            echo -e "Is this correct? (y/n)"
+            read -r confirm
+            
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                break
+            fi
+        done
+    else
+        # Non-interactive mode - use command line arguments or defaults
+        if [[ -n "$1" ]]; then
+            project_name="$1"
+            # Convert to PascalCase if needed
+            project_name=$(echo "$project_name" | sed -E 's/(^|_)([a-z])/\U\2/g')
+            echo -e "${YELLOW}Using project name: $project_name${NC}"
+        else
+            # Try to get project name from URL or use default
+            project_name="LeanProject"
+            echo -e "${YELLOW}No project name provided. Using default: $project_name${NC}"
+            echo -e "${YELLOW}To specify a name, use: curl ... | bash -s -- ProjectName${NC}"
         fi
-        
-        # Convert to PascalCase if needed
-        project_name=$(echo "$project_name" | sed -E 's/(^|_)([a-z])/\U\2/g')
-        
-        echo -e "${YELLOW}Project name will be: $project_name${NC}"
-        echo -e "Is this correct? (y/n)"
-        read -r confirm
-        
-        if [[ "$confirm" =~ ^[Yy]$ ]]; then
-            break
-        fi
-    done
+    fi
 }
 
 get_target_directory() {
-    echo -e "\n${BLUE}Where would you like to create the project?${NC}"
-    echo "1. Current directory ($(pwd))"
-    echo "2. Specify a different directory"
-    echo "3. Create in home directory (~/Projects)"
-    
-    read -r choice
-    
-    case $choice in
-        1)
-            target_dir="$(pwd)/$project_name"
-            ;;
-        2)
-            echo -e "\n${BLUE}Enter the full path:${NC}"
-            read -r custom_path
-            target_dir="$custom_path/$project_name"
-            ;;
-        3)
-            target_dir="$HOME/Projects/$project_name"
-            mkdir -p "$HOME/Projects"
-            ;;
-        *)
-            print_error "Invalid choice. Using current directory."
-            target_dir="$(pwd)/$project_name"
-            ;;
-    esac
+    if [[ -t 0 ]]; then
+        # Interactive mode
+        echo -e "\n${BLUE}Where would you like to create the project?${NC}"
+        echo "1. Current directory ($(pwd))"
+        echo "2. Specify a different directory"
+        echo "3. Create in home directory (~/Projects)"
+        
+        read -r choice
+        
+        case $choice in
+            1)
+                target_dir="$(pwd)/$project_name"
+                ;;
+            2)
+                echo -e "\n${BLUE}Enter the full path:${NC}"
+                read -r custom_path
+                target_dir="$custom_path/$project_name"
+                ;;
+            3)
+                target_dir="$HOME/Projects/$project_name"
+                mkdir -p "$HOME/Projects"
+                ;;
+            *)
+                print_error "Invalid choice. Using current directory."
+                target_dir="$(pwd)/$project_name"
+                ;;
+        esac
+    else
+        # Non-interactive mode - use current directory
+        target_dir="$(pwd)/$project_name"
+        echo -e "${YELLOW}Creating project in current directory: $target_dir${NC}"
+    fi
     
     # Check if directory already exists
     if [[ -d "$target_dir" ]]; then
-        print_error "Directory $target_dir already exists."
-        echo -e "${YELLOW}Do you want to overwrite it? (y/n)${NC}"
-        read -r overwrite
-        
-        if [[ "$overwrite" =~ ^[Yy]$ ]]; then
-            rm -rf "$target_dir"
+        if [[ -t 0 ]]; then
+            # Interactive mode - ask for confirmation
+            print_error "Directory $target_dir already exists."
+            echo -e "${YELLOW}Do you want to overwrite it? (y/n)${NC}"
+            read -r overwrite
+            
+            if [[ "$overwrite" =~ ^[Yy]$ ]]; then
+                rm -rf "$target_dir"
+            else
+                print_error "Aborting."
+                exit 1
+            fi
         else
-            print_error "Aborting."
-            exit 1
+            # Non-interactive mode - don't overwrite, use a new name
+            counter=1
+            while [[ -d "${target_dir}_${counter}" ]]; do
+                ((counter++))
+            done
+            target_dir="${target_dir}_${counter}"
+            echo -e "${YELLOW}Directory exists. Using: $target_dir${NC}"
         fi
     fi
 }
@@ -259,9 +294,11 @@ print_summary() {
 }
 
 main() {
+    local project_name_arg="$1"
+    
     print_header
     check_dependencies
-    get_project_name
+    get_project_name "$project_name_arg"
     get_target_directory
     clone_template
     rename_project
