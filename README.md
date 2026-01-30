@@ -10,6 +10,25 @@ A template for formal mathematics projects using Lean 4 with LaTeX report integr
 - **Project Structure**: Organized directory layout for scalability
 - **Documentation**: Comprehensive guides and checklists
 
+## One-Click Initialization
+
+Use the included script to quickly create a new project:
+
+```bash
+# Make the script executable
+chmod +x init-template.sh
+
+# Run the script
+./init-template.sh
+```
+
+The script will:
+1. Ask for your project name (e.g., "DedekindDomain")
+2. Let you choose where to create the project
+3. Clone the template and rename everything
+4. Initialize Git repository
+5. Set up project dependencies
+
 ## Quick Start
 
 ### 1. Clone and Setup
@@ -82,6 +101,7 @@ open report.pdf
 ├── lakefile.toml         # Lean project configuration
 ├── lean-toolchain        # Lean version specification
 ├── .gitignore           # Git ignore rules
+├── init-template.sh     # One-click initialization script
 └── README.md            # This file
 ```
 
