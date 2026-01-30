@@ -222,10 +222,14 @@ rename_project() {
         sed -i '' "s/defaultTargets = \\[\"MyProject\"\\]/defaultTargets = [\"$project_name\"]/g" lakefile.toml
     fi
     
-    # Update imports in Lean files
+    # Update imports and references in Lean files
     find lean -name "*.lean" -type f | while read -r file; do
         sed -i '' "s/import MyProject\./import $project_name\./g" "$file"
         sed -i '' "s/import MyProject$/import $project_name/g" "$file"
+        sed -i '' "s/#check MyProject\./#check $project_name\./g" "$file"
+        sed -i '' "s/#check MyProject$/#check $project_name/g" "$file"
+        sed -i '' "s/MyProject\.Defs\./$project_name\.Defs\./g" "$file"
+        sed -i '' "s/MyProject\.Basic\./$project_name\.Basic\./g" "$file"
     done
     
     # Update README.md
